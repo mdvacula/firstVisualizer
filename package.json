@@ -1,0 +1,22 @@
+{
+  "name": "firstvisualizer",
+  "version": "1.0.0",
+  "description": "\"Three.js audio visualizer\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdvacula/firstVisualizer.git"
+  },
+  "author": "Matthew Vacula",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdvacula/firstVisualizer/issues"
+  },
+  "homepage": "https://github.com/mdvacula/firstVisualizer#readme",
+  "dependencies": {
+    "three": "^0.88.0"
+  }
+}
