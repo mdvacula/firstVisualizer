@@ -1,39 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Visualizer</title>
-    <style>
-      body {margin: 0;}
-      canvas { width: 100%; height: 100%;}
-    </style>
 
-    <script id="vertexShader" type="x-shader/x-vertex">
-			varying vec2 vUv;
-			void main() {
-				vUv = uv;
-				gl_Position = vec4( position, 1.0 );
-			}
-		</script>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Three.js Visualizer</title>
+	<link rel="stylesheet" href="./style.css">
+	<script id="vertexShader" type="x-shader/x-vertex">
+		varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4( position, 1.0 ); }
+	</script>
 
-		<script id="fragmentShader" type="x-shader/x-fragment">
-			uniform sampler2D tAudioData;
-			varying vec2 vUv;
-			void main() {
-				float f = texture2D( tAudioData, vec2( vUv.x, 0.0 ) ).r;
-				float i = step( vUv.y, f ) * step( f - 0.0125, vUv.y );
-				vec3 backgroundColor = vec3((f*.32), (.025), (f*.15));
-				vec3 color = vec3((f), (.25), (f*.07) );
-				gl_FragColor = vec4( mix( backgroundColor, color, i), 1 );
-			}
-		</script>
-  </head>
-  <body>
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		uniform sampler2D tAudioData; varying vec2 vUv; void main() { float f = texture2D( tAudioData, vec2( vUv.x, 0.0 ) ).r; float i = step( vUv.y, f ) * step( f - 0.0125, vUv.y ); vec3 backgroundColor = vec3((f*.32), (.025), (f*.15)); vec3 color = vec3((f),
+		(.25), (f*.07) ); gl_FragColor = vec4( mix( backgroundColor, color, i), 1 ); }
+	</script>
+</head>
 
-		<input type="file" id="songFile" onchange="handleFiles(this.files)">
-		<h1>Simple Visualizer</h1>
-		<button id="playPause">Play/Pause</button>
-		<div id="container"></div>
-  </body>
+<body>
+	<header>
+		<input class="four" type="file" id="songFile" onchange="handleFiles(this.files)">
+		<h1 class="one">Simple Visualizer</h1>
+		<h2 class="two">Supplied Song: <a href="https://soundcloud.com/shoffymusic/flags-feat-yuna"> Flags (ft. Yuna) by Shoffy</a></h2>
+		<button class="three" id="playPause">Play/Pause</button>
+	</header>
+	<div id="container"></div>
+</body>
+
 </html>
