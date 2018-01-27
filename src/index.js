@@ -1,27 +1,51 @@
 const THREE = require('three');
 
+let fftSize = 128;
+
 let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000 );
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 let renderer = new THREE.WebGLRenderer();
-renderer.setSize (window.innerWidth, window.innerHeight);
-document.body.appendChild( renderer.domElement );
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
-let geometry = new THREE.BoxGeometry(1,1,1);
-let material = new THREE.MeshBasicMaterial( { color: 0x00ff00} );
-let cube = new THREE.Mesh( geometry, material );
+let audioLoader = new THREE.AudioLoader();
 
+let listener = new THREE.AudioListener();
 
-scene.add( cube );
-camera.position.z = (5);
+let audio = new THREE.Audio(listener);
+
+audioLoader.load('../assets/flags-feat-yuna.mp3', (buffer) => {
+  audio.setBuffer(buffer);
+  audio.setLoop(true);
+  audio.play();
+});
+
+let analyser = new THREE.AudioAnalyser(audio, fftSize);
+
+let uniforms = {
+  tAudioData: {
+    value: new THREE.DataTexture(analyser.data, fftSize / 2, 1, THREE.LuminanceFormat)
+  }
+};
+
+let material = new THREE.ShaderMaterial({uniforms: uniforms, vertexShader: document.getElementById('vertexShader').textContent, fragmentShader: document.getElementById('fragmentShader').textContent});
+
+let geometry = new THREE.PlaneBufferGeometry(1, 1);
+
+let mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 let animate = () => {
-  requestAnimationFrame( animate );
+  requestAnimationFrame(animate);
+  render();
+};
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-
-  renderer.render( scene, camera );
+let render = () => {
+  analyser.getFrequencyData();
+  uniforms.tAudioData.value.needsUpdate = true;
+  renderer.render(scene, camera);
 };
 
 animate();
