@@ -5,10 +5,11 @@ const THREE = require('three');
 let fftSize = 1024;
 
 //variable for audio file with default set
-let audioFile = "../assets/flags-feat-yuna.mp3";
+import mp3 from "../assets/flags-feat-yuna.mp3";
 //bool to handle pausing
 let isPlaying = false;
 
+let audioFile = mp3;
 //logic for loading a new song
 // **CLEAN UP
 let audioInput = document.getElementById("songFile");

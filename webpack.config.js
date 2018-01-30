@@ -17,6 +17,10 @@ module.exports = {
       {
         use: 'css-loader',
         test: /\.css$/
+      },
+      {
+        use: 'file-loader',
+        test: /\.mp3$/
       }
     ]
   },
