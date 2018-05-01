@@ -1,4 +1,4 @@
 # firstVisualizer
 Playing around with web audio and three.js
 
-[demo](./dist)
+[demo](mdvacula.com/firstVisualizer)
